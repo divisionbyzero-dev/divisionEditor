@@ -53,7 +53,7 @@
 
 1. **Cloner le dépôt :**
    ```bash
-   git clone https://github.com/VOTRE_COMPTE/division-editor.git
+   git clone https://github.com/divisionbyzero-dev/divisionEditor.git
    cd division-editor
    ```
 2. **Déployer sur un serveur local** (XAMPP, WAMP, MAMP…) et ouvrir `index.php`.
