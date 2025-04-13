@@ -1,0 +1,302 @@
+/*
+ * Module: base.css
+ * Description: Styles de base pour l'éditeur de texte.
+ * Date de création: 05/01/2022
+ * Auteur: divisionByZero.dev
+ * Site: https://www.divisionbyzero.dev
+ */
+
+/* Importer la police Roboto ET Material Icons */
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons'); /* Ajout pour être sûr */
+
+html{
+	height:100%;
+}
+
+body {
+	font-family: sans-serif;
+	margin: 20px;
+	background-color: #f4f4f4;
+	height:100%;
+}
+
+.editor-container {
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	max-width: 900px; /* Ajustez si nécessaire */
+	margin: 0 auto;
+	box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+	display: flex;
+	flex-direction: column;
+	min-height: 450px;
+	height: 95%;
+}
+
+.toolbar {
+	padding: 10px;
+	background-color: #eee;
+	border-bottom: 1px solid #ccc;
+	border-radius: 5px 5px 0 0;
+	flex-shrink: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px; /* Léger ajustement pour l'espacement */
+	align-items: center; /* Aligner verticalement les éléments */
+}
+
+/* --- Styles pour les boutons et le select DANS LA TOOLBAR --- */
+.toolbar button,
+#uploadModal button,
+.toolbar select {
+	/* Apparence */
+	background-color: #3F51B5;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	padding: 5px 8px; /* Ajustement padding pour mieux centrer icônes/texte */
+	font-size: 14px;
+	font-family: inherit;
+	cursor: pointer;
+	vertical-align: middle; /* Aide à l'alignement */
+	display: inline-flex; /* Important pour aligner contenu interne (icône) */
+	align-items: center; /* Aligner verticalement le contenu interne */
+	justify-content: center; /* Centrer horizontalement le contenu interne */
+
+	/* Effets */
+	opacity: 0.9;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+	transform: translateY(0);
+	transition: opacity 0.2s ease-in-out,
+				transform 0.1s ease-in-out,
+				background-color 0.2s ease-in-out,
+				box-shadow 0.2s ease-in-out;
+}
+
+/* Style spécifique pour les icônes Material Icons dans les boutons */
+.toolbar button .material-icons {
+	font-size: 18px; /* Taille de l'icône */
+	line-height: 1; /* Empêcher l'icône d'affecter la hauteur de ligne */
+	/* Pas besoin de marge si l'icône est seule dans le bouton */
+}
+
+/* Effets au survol */
+.toolbar button:hover,
+#uploadModal button:hover,
+.toolbar select:hover {
+	opacity: 1;
+	background-color: #4e61d1;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Effets au clic (état actif) */
+.toolbar button:active,
+#uploadModal button:active,
+.toolbar select:active {
+	opacity: 1;
+	transform: translateY(1px);
+	background-color: #3748a3;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Style spécifique pour le select */
+.toolbar select {
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	padding-right: 24px; /* Espace pour la flèche */
+	background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+	background-repeat: no-repeat;
+	background-position: right 8px center;
+	background-size: 10px auto;
+}
+
+/* --- Zone d'édition WYSIWYG --- */
+.editor-area {
+	min-height: 350px;
+	padding: 15px 20px;
+	border: none;
+	outline: none;
+	width: 100%;
+	box-sizing: border-box;
+	flex-grow: 1;
+	line-height: 1.6;
+	overflow-y: auto;
+	font-family: "Roboto", sans-serif;
+}
+
+.editor-area:focus {
+	box-shadow: inset 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+/* Style pour indiquer zone de drop (Ajouté si manquant) */
+.editor-area.drag-over {
+	outline: 2px dashed #3F51B5;
+	outline-offset: -5px;
+	background-color: rgba(63, 81, 181, 0.05);
+}
+
+
+/* --- Zone d'édition SOURCE --- */
+.source-editor-area-container {
+	min-height: 350px;
+	width: 100%;
+	box-sizing: border-box;
+	flex-grow: 1;
+	overflow: hidden;
+	background-color: white;
+	border-radius: 0 0 5px 5px;
+	display: flex;
+}
+
+.source-editor-area-container pre {
+	margin: 0;
+	padding:0px;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: inherit;
+	color: #ccc;
+	font-family: 'Courier New', Courier, monospace;
+	font-size: 14px;
+	line-height: 1.5;
+	white-space: pre;
+	outline: none;
+	border-radius: inherit;
+}
+
+.source-editor-code {
+	display: block;
+	outline: none;
+	min-height: 100%;
+	color: inherit;
+	background:white !important;
+}
+
+/* --- Zone de Progression Upload (Ajouté si manquant) --- */
+.upload-progress-container {
+	padding: 0 10px 5px 10px;
+	background-color: #f0f0f0;
+	border-bottom: 1px solid #ccc;
+	font-size: 0.8em;
+	color: #555;
+}
+.upload-progress-item {
+	margin-top: 3px;
+	background-color: #e9e9e9;
+	border-radius: 3px;
+	padding: 2px 5px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.upload-progress-item progress {
+	width: 100px;
+	height: 8px;
+	margin-left: 10px;
+}
+.upload-progress-item .status {
+	margin-left: 10px;
+	font-style: italic;
+}
+
+/* --- Modal Bibliothèque d'Images (Ajouté si manquant) --- */
+.modal {
+	display: none; position: fixed; z-index: 1000;
+	left: 0; top: 0; width: 100%; height: 100%;
+	overflow: auto; background-color: rgba(0, 0, 0, 0.5);
+	padding-top: 60px;
+}
+.modal-content {
+	background-color: #fefefe; margin: 5% auto; padding: 20px;
+	border: 1px solid #888; width: 80%; max-width: 700px;
+	border-radius: 5px; position: relative;
+}
+.close-button {
+	color: #aaa; position: absolute; top: 10px; right: 15px;
+	font-size: 28px; font-weight: bold; cursor: pointer;
+}
+.close-button:hover, .close-button:focus { color: black; text-decoration: none; }
+.image-library-grid {
+	display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+	gap: 10px; max-height: 400px; overflow-y: auto;
+	margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px;
+}
+.image-library-item {
+	cursor: pointer; border: 1px solid #ddd; padding: 5px;
+	text-align: center; transition: transform 0.2s, box-shadow 0.2s;
+}
+.image-library-item:hover { transform: scale(1.05); box-shadow: 0 0 8px rgba(0,0,0,0.2); }
+.image-library-item img {
+	max-width: 100%; height: 80px; object-fit: cover;
+	display: block; margin-bottom: 5px;
+}
+
+
+/* --- Styles pour le contenu DANS l'éditeur WYSIWYG (#editor) --- */
+.editor-area p {
+	font-size: 1.1em; margin-top: 0; margin-bottom: 1em; padding: 0;
+}
+.editor-area h2 {
+	margin-top: 10px; margin-bottom: 10px; font-size: 1.8em; font-weight: 500;
+	border-bottom: 1px solid #eee; padding-bottom: 0.3em;
+}
+.editor-area h3 {
+	margin-top: 10px; margin-bottom: 5px; font-size: 1.5em; font-weight: 500;
+}
+.editor-area h4 {
+	margin-top: 10px; margin-bottom: 5px; font-size: 1.2em; font-weight: 500; color: #333;
+}
+.editor-area ul {
+	margin-top: 0; margin-bottom: 1em; padding-left: 40px; list-style: disc;
+}
+.editor-area ul li {
+	padding-top: 2px; padding-bottom: 2px; margin-bottom: 0.3em;
+}
+.editor-area pre {
+	position: relative; background-color: #2d2d2d; color: #ccc; padding: 16px;
+	border-radius: 4px; overflow-x: auto; margin: 1em 0;
+	font-family: 'Courier New', Courier, monospace; font-size: 0.9em; white-space: pre;
+	tab-size: 4;
+	-moz-tab-size: 4; /* Pour Firefox */
+
+}
+.editor-area pre code {
+	display: block; padding: 0; background: none; color: inherit;
+    tab-size: 4;
+    -moz-tab-size: 4; /* Pour Firefox */
+}
+/* Style pour images dans l'éditeur (Ajouté si manquant) */
+.editor-area img {
+	max-width: 100%; height: auto; margin: 0.5em 0; cursor: pointer;
+}
+/* Style pour images sélectionnées (visuel) (Ajouté si manquant) */
+.editor-area img.selected-image {
+	 outline: 3px solid #3F51B5;
+	 outline-offset: 2px;
+}
+
+/* --- Styles pour l'impression (Ajouté si manquant) --- */
+@media print {
+	body * {
+		visibility: hidden; margin: 0; padding: 0;
+		box-shadow: none; border: none;
+	}
+	#editor, #editor * { visibility: visible; }
+	#editor {
+		position: absolute; left: 0; top: 0; width: 100%; height: auto;
+		overflow: visible; font-family: "Roboto", sans-serif;
+		background-color: #fff; color: #000;
+		padding: 1cm; box-sizing: border-box; border-radius: 0;
+	}
+	#editor h2, #editor h3, #editor h4 { border-bottom: none; color: #000 !important; }
+	#editor pre {
+		 background-color: #f8f8f8 !important; color: #333 !important;
+		 border: 1px solid #ddd; white-space: pre-wrap;
+		 word-wrap: break-word; page-break-inside: avoid;
+	 }
+	 /* #editor pre code span { color: inherit !important; } */ /* Optionnel: N&B */
+	 #editor ul, #editor ol { padding-left: 20px; }
+	 #editor li { margin-bottom: 0.2em; }
+}

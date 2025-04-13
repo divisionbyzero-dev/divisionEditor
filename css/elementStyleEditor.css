@@ -1,0 +1,116 @@
+/*
+ * Module: elementStyleEditor.css
+ * Description: Styles pour le module d'édition de style d'éléments, utilisés pour modifier l'apparence (modal et formulaire).
+ * Date de création: 06/01/2022
+ * Auteur: divisionByZero.dev
+ * Site: https://www.divisionbyzero.dev
+ */
+
+
+/*************************************
+ * Element Style Editor Modal
+ *************************************/
+
+/* Même style de modal que la bibliothèque d'images */
+#elementStyleEditorModal {
+  display: none; 
+  position: fixed; 
+  z-index: 1000;
+  left: 0; 
+  top: 0;
+  width: 100%; 
+  height: 100%;
+  overflow: auto; 
+  background-color: rgba(0, 0, 0, 0.5);
+  padding-top: 60px; /* un léger décalage vertical */
+}
+
+#elementStyleEditorModal .modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px;
+  border-radius: 5px;
+  position: relative;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+  font-family: "Roboto", sans-serif;
+}
+
+/* Bouton de fermeture en forme de croix (similaire à la bibliothèque d'images) */
+#elementStyleEditorModal .close-button {
+  color: #aaa;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+#elementStyleEditorModal .close-button:hover,
+#elementStyleEditorModal .close-button:focus {
+  color: black;
+}
+
+/* Styles pour le formulaire à l'intérieur du modal */
+#elementStyleEditorModal form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+#elementStyleEditorModal label {
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+/* Champ texte pour l'inline-style */
+#elementStyleEditorModal #genericStyleInput {
+  width: 100%;
+  min-height: 60px;
+  resize: vertical;
+  font-family: "Roboto", sans-serif;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px;
+  font-size: 14px;
+}
+
+/* Même apparence pour les boutons que dans la toolbar */
+#elementStyleEditorModal button {
+  background-color: #3F51B5;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  transform: translateY(0);
+  transition: opacity 0.2s ease-in-out,
+			  transform 0.1s ease-in-out,
+			  background-color 0.2s ease-in-out,
+			  box-shadow 0.2s ease-in-out;
+  width: fit-content; /* S'adapte à la taille du texte */
+  margin: 0 auto; /* Centré horizontalement */
+}
+
+/* Hover/active identique à vos autres boutons */
+#elementStyleEditorModal button:hover {
+  opacity: 1;
+  background-color: #4e61d1;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+#elementStyleEditorModal button:active {
+  opacity: 1;
+  transform: translateY(1px);
+  background-color: #3748a3;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
