@@ -5,6 +5,8 @@
 > **Projet expérimental**  
 > Projet expérimental créé from scratch pour répondre à mes besoins et comprendre les défis de ce type d’outil.
 
+![Aperçu division-editor]([https://votresite.com/assets/screenshot.png](https://divisionbyzero.dev/images/division-editor/screenshot.png))
+
 ## Fonctionnalités
 
 - **Édition HTML en mode WYSIWYG** avec possibilité de passer en mode source.
@@ -65,3 +67,5 @@ Vos contributions (issues, pull requests) sont les bienvenues !
 ## Licence
 
 Distribué sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+
+[divisionByZero.dev](https://www.divisionbyzero.dev)
