@@ -31,17 +31,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const uploadImageButton = document.getElementById('uploadImageButton');
   const imageUploadInput = document.getElementById('imageUploadInput');
   const browseImageLibraryButton = document.getElementById('browseImageLibraryButton');
-  const createLinkButton = document.getElementById('createLinkButton');
   const uploadProgressContainer = document.getElementById('uploadProgressContainer');
   const imageLibraryModal = document.getElementById('imageLibraryModal');
   const closeImageLibraryModal = document.getElementById('closeImageLibraryModal');
   const imageLibraryContent = document.getElementById('imageLibraryContent');
 
-  // Référence pour le bouton de couleur (à ajouter dans votre toolbar)
+  // Références pour les liens et la palette de couleurs
+  const createLinkButton = document.getElementById('createLinkButton');
+  const unlinkButton = document.querySelector('button[data-command="unlink"]');
   const colorPaletteButton = document.getElementById('colorPaletteButton');
 
-  // Pour le bouton de suppression de lien (id ou data-command)
-  const unlinkButton = document.querySelector('button[data-command="unlink"]');
+  // **NOUVEAU** : bouton pour ouvrir l'éditeur de style d'élément
+  const openStyleEditorButton = document.getElementById('editElementStyleButton');
+  if (!openStyleEditorButton) {
+	console.error("Bouton 'editStyleButton' introuvable pour ElementStyleEditor.");
+  }
 
   let sourceMode = false;
 
@@ -55,91 +59,93 @@ document.addEventListener('DOMContentLoaded', () => {
 	console.error("Bouton 'addCodeBlock' introuvable.");
   }
 
-  // Exemple d'attachement d'une méthode getContent sur l'instance de l'éditeur
-  // Ici, on "injecte" la méthode getCleanHTML de CodeManager directement sur l'élément editor.
+  // Exposer getCleanHTML sur l'éditeur
   editor.getContent = CodeManager.getCleanHTML.bind(CodeManager);
 
-  // Écouteur générique pour la toolbar
+  // Écouteur générique pour la toolbar (execCommand)
   toolbar.addEventListener('click', (event) => {
 	const target = event.target.closest('button');
-	const specificallyHandledIds = [
-	  'createLinkButton', 'addCodeBlock', 'toggleSource', 'printButton',
-	  'insertImageUrlButton', 'uploadImageButton', 'browseImageLibraryButton'
+	const handledIds = [
+	  'createLinkButton','addCodeBlock','toggleSource','printButton',
+	  'insertImageUrlButton','uploadImageButton','browseImageLibraryButton'
 	];
-	if (target && target.dataset.command && !specificallyHandledIds.includes(target.id)) {
+	if (target && target.dataset.command && !handledIds.includes(target.id)) {
 	  if (sourceMode) {
 		alert("Passez en mode éditeur visuel.");
 		return;
 	  }
-	  const command = target.dataset.command;
-	  const value = target.dataset.value || null;
-	  document.execCommand(command, false, value);
+	  document.execCommand(target.dataset.command, false, target.dataset.value || null);
 	  editor.focus();
 	}
   });
 
-  // Gérer la touche Tab
+  // Gestion de la touche Tab pour insérer une tabulation
   document.addEventListener('keydown', (event) => {
-	if (event.key !== 'Tab') return;
-	const activeElement = document.activeElement;
-	if (editor.contains(activeElement) || activeElement === sourceEditor) {
-	  event.preventDefault();
-	  document.execCommand('insertText', false, '\t');
+	if (event.key === 'Tab') {
+	  const active = document.activeElement;
+	  if (editor.contains(active) || active === sourceEditor) {
+		event.preventDefault();
+		document.execCommand('insertText', false, '\t');
+	  }
 	}
   });
 
   // Initialisation du gestionnaire d'images
   ImageHandler.init({
-	editor: editor,
-	uploadProgressContainer: uploadProgressContainer,
-	imageLibraryModal: imageLibraryModal,
-	imageLibraryContent: imageLibraryContent,
-	insertImageUrlButton: insertImageUrlButton,
-	uploadImageButton: uploadImageButton,
-	imageUploadInput: imageUploadInput,
-	browseImageLibraryButton: browseImageLibraryButton,
-	closeImageLibraryModal: closeImageLibraryModal
+	editor,
+	uploadProgressContainer,
+	imageLibraryModal,
+	imageLibraryContent,
+	insertImageUrlButton,
+	uploadImageButton,
+	imageUploadInput,
+	browseImageLibraryButton,
+	closeImageLibraryModal
   });
 
   // Initialisation du mode source et de l'impression
   SourcePrintManager.init({
-	editor: editor,
-	sourceEditorContainer: sourceEditorContainer,
-	sourceEditor: sourceEditor,
-	toggleSourceButton: toggleSourceButton,
-	printButton: printButton,
+	editor,
+	sourceEditorContainer,
+	sourceEditor,
+	toggleSourceButton,
+	printButton,
 	codeManager: CodeManager
   });
 
   // Initialisation de la palette de couleur
   if (colorPaletteButton) {
 	ColorPalette.init({
-	  editor: editor,
+	  editor,
 	  button: colorPaletteButton
 	});
   } else {
 	console.error("Bouton 'colorPaletteButton' introuvable.");
   }
 
-  // Initialiser le LinkManager
+  // Initialisation du gestionnaire de liens
   LinkManager.init({
-	editor: editor,
-	createLinkButton: createLinkButton,
-	unlinkButton: unlinkButton
+	editor,
+	createLinkButton,
+	unlinkButton
   });
-  
-  ElementStyleEditor.init({ editor: editor });
 
-  // Fonction globale si besoin
+  // Initialisation de l'éditeur de style d'éléments
+  ElementStyleEditor.init({
+	editor,
+	openStyleEditorButton
+  });
+
+  // Fonction globale pour récupérer le HTML propre
   window.getCleanHTMLContent = () => {
 	const cleanHTML = CodeManager.getCleanHTML();
-	console.log("Contenu HTML propre :", cleanHTML);
+	console.log("Contenu HTML propre :", cleanHTML);
 	return cleanHTML;
   };
 
   // Autres initialisations complémentaires…
   function initializeEditor() {
-	// Par exemple, initialiser des plugins supplémentaires
+	// par exemple, plugins additionnels
   }
   initializeEditor();
 });
