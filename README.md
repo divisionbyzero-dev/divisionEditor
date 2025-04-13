@@ -3,7 +3,7 @@
 **division-editor** est un éditeur HTML riche (WYSIWYG) open source qui permet d’éditer du contenu HTML tout en apportant un soin particulier aux zones de code. Il inclut des fonctionnalités avancées telles que la coloration syntaxique, la gestion fine de l’indentation (Tab/Shift+Tab), la modification des styles inline et la gestion d’images et de liens.
 
 > **Projet expérimental**  
-> Ce projet a été développé pour mes besoins personnels et dans le cadre de ma formation. Il est fonctionnel mais reste expérimental et peut être amélioré. Je continue à le perfectionner pendant mon temps libre.
+> Projet expérimental créé from scratch pour répondre à mes besoins et comprendre les défis de ce type d’outil.
 
 ## Fonctionnalités
 
